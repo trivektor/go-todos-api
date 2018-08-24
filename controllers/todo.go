@@ -6,5 +6,5 @@ import (
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
-  fmt.Fprintf(w, "Todos Index Page")  
+  fmt.Fprintf(w, "Todos API")  
 }
