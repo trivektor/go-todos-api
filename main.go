@@ -2,15 +2,12 @@ package main
 
 import (
   "net/http"
-  "fmt"
   "log"
+  "./controllers"
 )
 
 func main() {
-  http.HandleFunc("/api/index", indexHandler)
+  http.HandleFunc("/", controllers.Index)
+  http.HandleFunc("/api/todos", controllers.Index)
   log.Fatal(http.ListenAndServe(":8080", nil))
-}
-
-func indexHandler(w http.ResponseWriter, r *http.Request) {
-  fmt.Fprint(w, "Hello World!")
 }
