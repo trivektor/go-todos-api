@@ -29,5 +29,6 @@ func main() {
   router.POST("/api/todos", controllers.Create)
   router.DELETE("/api/todos/:id", controllers.Delete)
   router.GET("/api/todos/:id", controllers.Show)
+  router.PUT("/api/todos/:id", controllers.Update)
   log.Fatal(http.ListenAndServe(":8080", router))
 }

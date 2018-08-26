@@ -58,3 +58,9 @@ func Show(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
   w.WriteHeader(200)
   w.Write(response)
 }
+
+func Update(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+  description := r.FormValue("description")
+  id := ps.ByName("id")
+  database.DBConn.Exec("UPDATE todos SET description = ? WHERE id = ?", description, id)
+}
