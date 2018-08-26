@@ -43,3 +43,18 @@ func Delete(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
   id := ps.ByName("id")
   database.DBConn.Exec("DELETE FROM todos WHERE id = ?", id)
 }
+
+// curl http://localhost:8080/api/todos/1
+func Show(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+  row := database.DBConn.QueryRow("SELECT * FROM todos WHERE id = ? LIMIT 1", ps.ByName("id"))
+  todo := models.Todo{}
+  var id int
+  var description string
+  row.Scan(&id, &description)
+  todo.Id = id
+  todo.Description = description
+  response, _ := json.Marshal(todo)
+  w.Header().Set("Content-Type", "application/json")
+  w.WriteHeader(200)
+  w.Write(response)
+}
