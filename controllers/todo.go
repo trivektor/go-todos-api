@@ -59,6 +59,7 @@ func Show(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
   w.Write(response)
 }
 
+// curl -d "description=buy concert ticket" -X PUT http://localhost:8080/api/todos/1
 func Update(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
   description := r.FormValue("description")
   id := ps.ByName("id")
