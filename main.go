@@ -3,11 +3,29 @@ package main
 import (
   "net/http"
   "log"
+  "fmt"
+  "database/sql"
+  _ "github.com/go-sql-driver/mysql"
+  "github.com/julienschmidt/httprouter"
+
   "todos/controllers"
+  "todos/database"
 )
 
 func main() {
-  http.HandleFunc("/", controllers.Index)
-  http.HandleFunc("/api/todos", controllers.Index)
-  log.Fatal(http.ListenAndServe(":8080", nil))
+  // Database
+  var err error
+
+  database.DBConn, err = sql.Open("mysql", "root:@tcp(127.0.0.1:3306)/todos")
+
+  if err != nil {
+		fmt.Print(err.Error())
+	}
+
+  // Routing
+  router := httprouter.New()
+  router.GET("/", controllers.Index)
+  router.GET("/api/todos", controllers.Index)
+  router.POST("/api/todos", controllers.Create)
+  log.Fatal(http.ListenAndServe(":8080", router))
 }
