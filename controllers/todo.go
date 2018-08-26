@@ -32,7 +32,14 @@ func Index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
   w.Write(response)
 }
 
+// curl -d "description=buy milk" -X POST http://localhost:8080/api/todos
 func Create(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
   description := r.FormValue("description")
   database.DBConn.Exec("INSERT INTO todos VALUES(NULL, ?)", description)
+}
+
+// curl -X DELETE http://localhost:8080/api/todos/1
+func Delete(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+  id := ps.ByName("id")
+  database.DBConn.Exec("DELETE FROM todos WHERE id = ?", id)
 }
